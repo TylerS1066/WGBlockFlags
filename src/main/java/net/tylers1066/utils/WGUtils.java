@@ -1,7 +1,9 @@
 package net.tylers1066.utils;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;
-import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.FlagValueCalculator;
 import com.sk89q.worldguard.protection.flags.Flag;
@@ -18,7 +20,7 @@ import java.util.Set;
 
 public class WGUtils {
     public static ApplicableRegionSet getApplicableRegions(Location loc) {
-        return WGBukkit.getPlugin().getRegionContainer().createQuery().getApplicableRegions(loc);
+        return WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(loc));
     }
 
     public static <T> T queryValue(Player player, World world, Set<ProtectedRegion> regions, Flag<T> flag) {
@@ -26,7 +28,7 @@ public class WGUtils {
     }
 
     private static LocalPlayer wrapPlayer(Player p) {
-        return WGBukkit.getPlugin().wrapPlayer(p);
+        return WorldGuardPlugin.inst().wrapPlayer(p);
     }
 
     private static <T> FlagValueCalculator createFlagValueCalculator(Player player, World world, @NotNull Set<ProtectedRegion> regions, Flag<T> flag) {
@@ -38,7 +40,7 @@ public class WGUtils {
 
         NormativeOrders.sort(checkForRegions);
 
-        ProtectedRegion global = WGBukkit.getPlugin().getRegionContainer().get(world).getRegion(ProtectedRegion.GLOBAL_REGION);
+        ProtectedRegion global = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world)).getRegion(ProtectedRegion.GLOBAL_REGION);
         if (global != null) {
             if (hasBypass(player, world, global, flag)) //Lets do like this for now to reduce dublicated code
                 global = null;
