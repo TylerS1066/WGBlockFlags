@@ -12,9 +12,9 @@ jobs:
       with:
         path: WGBlockFlags
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v1
       with:
-        java-version: '11'
+        java-version: 1.11
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
