@@ -1,0 +1,8 @@
+name: WGBlockFlags
+version: ${project.version}
+main: net.tylers1066.WGBlockFlags
+prefix: WGBlockFlags
+depend: [ WorldGuard ]
+authors: [ TylerS1066 ]
+description: WorldGuard Block Flags
+website: https://github.com/TylerS1066/
