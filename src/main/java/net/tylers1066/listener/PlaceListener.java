@@ -4,6 +4,7 @@ import com.sk89q.worldguard.bukkit.event.block.PlaceBlockEvent;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import net.tylers1066.flags.Flags;
 import net.tylers1066.utils.WGUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -53,8 +54,9 @@ public class PlaceListener implements Listener {
 
             // Check deny-block-place
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCK_PLACE);
-            if(materials != null && materials.contains(type))
+            if(materials != null && materials.contains(type)) {
                 e.setResult(Event.Result.DENY);
+            }
         }
     }
 }
