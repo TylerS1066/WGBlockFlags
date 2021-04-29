@@ -26,6 +26,7 @@ public class PlaceListener implements Listener {
         Player cause = (Player) rootCause;
         for(Block b : e.getBlocks()) {
             Material type = b.getType();
+            Bukkit.broadcastMessage(cause.getName() + " placed " + type + " and result is " + e.getResult());
             if(type == Material.AIR)
                 type = e.getEffectiveMaterial();
 
@@ -35,6 +36,7 @@ public class PlaceListener implements Listener {
             Set<Material> materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCKS);
             if (materials != null && materials.contains(type)) {
                 if(e.getResult() == Event.Result.DEFAULT) {
+                    Bukkit.broadcastMessage("allow-blocks");
                     e.setResult(Event.Result.ALLOW);
                     return;
                 }
@@ -43,6 +45,7 @@ public class PlaceListener implements Listener {
             // Check deny-blocks
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCKS);
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
+                Bukkit.broadcastMessage("deny-blocks");
                 e.setResult(Event.Result.DENY);
                 return;
             }
@@ -50,6 +53,7 @@ public class PlaceListener implements Listener {
             // Check allow-block-place
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCK_PLACE);
             if(materials != null && materials.contains(type)) {
+                Bukkit.broadcastMessage("allow-block-place");
                 e.setResult(Event.Result.ALLOW);
                 return;
             }
@@ -57,6 +61,7 @@ public class PlaceListener implements Listener {
             // Check deny-block-place
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCK_PLACE);
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
+                Bukkit.broadcastMessage("deny-block-place");
                 e.setResult(Event.Result.DENY);
             }
         }

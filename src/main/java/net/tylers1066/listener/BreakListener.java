@@ -23,18 +23,17 @@ public class BreakListener implements Listener {
         if(!(rootCause instanceof Player))
             return;
 
-        if(e.getResult() != Event.Result.DEFAULT)
-            return;
-
         Player cause = (Player) rootCause;
         for(Block b : e.getBlocks()) {
             Material type = b.getType();
+            Bukkit.broadcastMessage(cause.getName() + " broke " + type + " and result is " + e.getResult());
             ApplicableRegionSet regions = WGUtils.getApplicableRegions(b.getLocation());
 
             // Check allow-blocks
             Set<Material> materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCKS);
             if (materials != null && materials.contains(type)) {
                 if(e.getResult() == Event.Result.DEFAULT) {
+                    Bukkit.broadcastMessage("allow-blocks");
                     e.setResult(Event.Result.ALLOW);
                     return;
                 }
@@ -43,6 +42,7 @@ public class BreakListener implements Listener {
             // Check deny-blocks
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCKS);
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
+                Bukkit.broadcastMessage("deny-blocks");
                 e.setResult(Event.Result.DENY);
                 return;
             }
@@ -50,6 +50,7 @@ public class BreakListener implements Listener {
             // Check allow-block-break
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCK_BREAK);
             if(materials != null && materials.contains(type)) {
+                Bukkit.broadcastMessage("allow-block-break");
                 e.setResult(Event.Result.ALLOW);
                 return;
             }
@@ -57,6 +58,7 @@ public class BreakListener implements Listener {
             // Check deny-block-break
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCK_BREAK);
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
+                Bukkit.broadcastMessage("deny-block-break");
                 e.setResult(Event.Result.DENY);
             }
         }
