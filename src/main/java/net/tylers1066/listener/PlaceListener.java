@@ -42,7 +42,7 @@ public class PlaceListener implements Listener {
 
             // Check deny-blocks
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCKS);
-            if(materials != null && materials.contains(type)) {
+            if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 e.setResult(Event.Result.DENY);
                 return;
             }
@@ -56,7 +56,7 @@ public class PlaceListener implements Listener {
 
             // Check deny-block-place
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCK_PLACE);
-            if(materials != null && materials.contains(type)) {
+            if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 e.setResult(Event.Result.DENY);
             }
         }
