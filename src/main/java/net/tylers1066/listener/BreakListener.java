@@ -60,7 +60,9 @@ public class BreakListener implements Listener {
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 Bukkit.broadcastMessage("deny-block-break");
                 e.setResult(Event.Result.DENY);
+                return;
             }
         }
+        Bukkit.broadcastMessage("Nothing");
     }
 }

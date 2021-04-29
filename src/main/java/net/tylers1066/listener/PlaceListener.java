@@ -63,7 +63,9 @@ public class PlaceListener implements Listener {
             if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 Bukkit.broadcastMessage("deny-block-place");
                 e.setResult(Event.Result.DENY);
+                return;
             }
         }
+        Bukkit.broadcastMessage("Nothing");
     }
 }
