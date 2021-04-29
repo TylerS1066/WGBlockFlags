@@ -6,7 +6,7 @@ import org.bukkit.Material;
 
 public class Flags {
     public final static SetFlag<Material> ALLOW_BLOCKS = new SetFlag<Material>("allow-blocks", new BlockMaterialFlag(null));
-    public final static SetFlag<Material> DENY_BLOCKS = new SetFlag<Material>("allow-blocks", new BlockMaterialFlag(null));
+    public final static SetFlag<Material> DENY_BLOCKS = new SetFlag<Material>("deny-blocks", new BlockMaterialFlag(null));
 
     public final static SetFlag<Material> ALLOW_BLOCK_PLACE = new SetFlag<Material>("allow-block-place", new BlockMaterialFlag(null));
     public final static SetFlag<Material> DENY_BLOCK_PLACE = new SetFlag<Material>("deny-block-place", new BlockMaterialFlag(null));
