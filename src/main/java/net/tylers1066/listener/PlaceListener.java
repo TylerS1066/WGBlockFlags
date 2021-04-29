@@ -34,8 +34,10 @@ public class PlaceListener implements Listener {
             // Check allow-blocks
             Set<Material> materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCKS);
             if (materials != null && materials.contains(type)) {
-                e.setResult(Event.Result.ALLOW);
-                return;
+                if(e.getResult() == Event.Result.DEFAULT) {
+                    e.setResult(Event.Result.ALLOW);
+                    return;
+                }
             }
 
             // Check deny-blocks
