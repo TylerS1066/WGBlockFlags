@@ -34,7 +34,7 @@ public class BreakListener implements Listener {
 
             // Check allow-blocks
             Set<Material> materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCKS);
-            if (materials != null && materials.contains(type)) {
+            if (materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 if(e.getResult() == Event.Result.DEFAULT) {
                     e.setResult(Event.Result.ALLOW);
                     return;
