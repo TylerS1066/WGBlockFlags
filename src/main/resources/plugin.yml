@@ -6,3 +6,4 @@ depend: [ WorldGuard ]
 authors: [ TylerS1066 ]
 description: WorldGuard Block Flags
 website: https://github.com/TylerS1066/
+api-version: 1.14
