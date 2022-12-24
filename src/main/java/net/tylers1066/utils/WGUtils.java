@@ -7,8 +7,12 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.FlagValueCalculator;
 import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import com.sk89q.worldguard.protection.util.NormativeOrders;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -29,7 +33,21 @@ public class WGUtils {
     }
 
     public static boolean canBuild(Player player, Block block) {
-        return WGBukkit.getPlugin().canBuild(player, block);
+        RegionQuery query = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
+        LocalPlayer localPlayer = null;
+        if (player != null) {
+            localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
+        }
+        StateFlag.State state = query.queryState(BukkitAdapter.adapt(block.getLocation()), localPlayer, Flags.BUILD);
+        if (state == null)
+            return true;
+        switch (state) {
+            case DENY:
+                return false;
+            case ALLOW:
+            default:
+                return true;
+        }
     }
 
     private static LocalPlayer wrapPlayer(Player p) {

@@ -1,6 +1,8 @@
 package net.tylers1066;
 
 import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.SetFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import net.tylers1066.flags.Flags;
 import net.tylers1066.listener.BreakListener;
@@ -17,7 +19,7 @@ public final class WGBlockFlags extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        FlagRegistry flagRegistry = WGBukkit.getPlugin().getFlagRegistry();
+        FlagRegistry flagRegistry = WorldGuard.getInstance().getFlagRegistry();
         registerFlag(flagRegistry, Flags.ALLOW_BLOCKS);
         registerFlag(flagRegistry, Flags.ALLOW_BLOCK_PLACE);
         registerFlag(flagRegistry, Flags.ALLOW_BLOCK_BREAK);

@@ -1,11 +1,9 @@
 package net.tylers1066.listener;
 
-import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.bukkit.event.block.BreakBlockEvent;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import net.tylers1066.flags.Flags;
 import net.tylers1066.utils.WGUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
