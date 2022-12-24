@@ -1,9 +1,11 @@
 package net.tylers1066.listener;
 
+import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.bukkit.event.block.BreakBlockEvent;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import net.tylers1066.flags.Flags;
 import net.tylers1066.utils.WGUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -24,19 +26,24 @@ public class BreakListener implements Listener {
 
         Player cause = (Player) rootCause;
         for(Block b : e.getBlocks()) {
+            if(!WGUtils.canBuild(cause, b)) {
+                continue;
+            }
             Material type = b.getType();
             ApplicableRegionSet regions = WGUtils.getApplicableRegions(b.getLocation());
 
             // Check allow-blocks
             Set<Material> materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.ALLOW_BLOCKS);
-            if (materials != null && materials.contains(type)) {
-                e.setResult(Event.Result.ALLOW);
-                return;
+            if (materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
+                if(e.getResult() == Event.Result.DEFAULT) {
+                    e.setResult(Event.Result.ALLOW);
+                    return;
+                }
             }
 
             // Check deny-blocks
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCKS);
-            if(materials != null && materials.contains(type)) {
+            if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 e.setResult(Event.Result.DENY);
                 return;
             }
@@ -50,8 +57,10 @@ public class BreakListener implements Listener {
 
             // Check deny-block-break
             materials = WGUtils.queryValue(cause, cause.getWorld(), regions.getRegions(), Flags.DENY_BLOCK_BREAK);
-            if(materials != null && materials.contains(type))
+            if(materials != null && (materials.contains(type) || materials.contains(Material.AIR))) {
                 e.setResult(Event.Result.DENY);
+                return;
+            }
         }
     }
 }

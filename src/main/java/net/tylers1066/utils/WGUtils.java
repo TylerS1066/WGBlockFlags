@@ -11,6 +11,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.util.NormativeOrders;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,10 @@ public class WGUtils {
 
     public static <T> T queryValue(Player player, World world, Set<ProtectedRegion> regions, Flag<T> flag) {
         return createFlagValueCalculator(player, world, regions, flag).queryValue(wrapPlayer(player), flag);
+    }
+
+    public static boolean canBuild(Player player, Block block) {
+        return WGBukkit.getPlugin().canBuild(player, block);
     }
 
     private static LocalPlayer wrapPlayer(Player p) {
