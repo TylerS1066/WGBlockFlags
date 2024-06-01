@@ -6,7 +6,7 @@
 
     <groupId>net.tylers1066</groupId>
     <artifactId>WGBlockFlags</artifactId>
-    <version>1.0.0_beta-2-a</version>
+    <version>1.0.0_beta-2</version>
     <packaging>jar</packaging>
 
     <name>WGBlockFlags</name>
